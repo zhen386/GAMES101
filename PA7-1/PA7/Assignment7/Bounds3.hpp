@@ -97,7 +97,52 @@ inline bool Bounds3::IntersectP(const Ray& ray, const Vector3f& invDir,
     // dirIsNeg: ray direction(x,y,z), dirIsNeg=[int(x>0),int(y>0),int(z>0)], use this to simplify your logic
     // TODO test if ray bound intersects
 
+    float t_min_x, t_min_y, t_min_z, t_max_x, t_max_y, t_max_z;
+
+    if (dirIsNeg[0]) {
+        t_min_x = (pMin.x - ray.origin.x) * invDir.x;
+        t_max_x = (pMax.x - ray.origin.x) * invDir.x;
+    } else {
+        //std::cout << 1 << std::endl;
+        t_min_x = (pMax.x - ray.origin.x) * invDir.x;
+        t_max_x = (pMin.x - ray.origin.x) * invDir.x;
+    };
+
+    if (dirIsNeg[1]) {
+        t_min_y = (pMin.y - ray.origin.y) * invDir.y;
+        t_max_y = (pMax.y - ray.origin.y) * invDir.y;
+    } else {
+        //std::cout << 1 << std::endl;
+        t_min_y = (pMax.y - ray.origin.y) * invDir.y;
+        t_max_y = (pMin.y - ray.origin.y) * invDir.y;
+    }
+
+    if (dirIsNeg[2]) {
+        t_min_z = (pMin.z - ray.origin.z) * invDir.z;
+        t_max_z = (pMax.z - ray.origin.z) * invDir.z;
+    } else {
+        //std::cout << 1 << std::endl;
+        t_min_z = (pMax.z - ray.origin.z) * invDir.z;
+        t_max_z = (pMin.z - ray.origin.z) * invDir.z;
+    }
+
+    float t_min = std::max(std::max(t_min_x, t_min_y), t_min_z);
+    float t_max = std::min(std::min(t_max_x, t_max_y), t_max_z);
+
+    return t_min <= t_max && t_max > EPSILON;
 }
+
+// Vector3f t1 = (pMin - ray.origin) * invDir;
+// Vector3f t2 = (pMax - ray.origin) * invDir;
+//
+// Vector3f t_min_v = Vector3f::Min(t1, t2);
+// Vector3f t_max_v = Vector3f::Max(t1, t2);
+//
+// std::cout << "min: " << t_min_v.x << " " << t_min_v.y << " " << t_min_v.z << std::endl;
+// std::cout << "max: " << t_max_v.x << " " << t_max_v.y << " " << t_max_v.z << std::endl;
+//
+// float t_min = std::max(t_min_v.x, std::max(t_min_v.y, t_min_v.z));
+// float t_max = std::min(t_max_v.x, std::min(t_max_v.y, t_max_v.z));
 
 inline Bounds3 Union(const Bounds3& b1, const Bounds3& b2)
 {

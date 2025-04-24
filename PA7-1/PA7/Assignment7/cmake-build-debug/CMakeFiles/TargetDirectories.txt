@@ -1,0 +1,3 @@
+/Users/zhen/Devs/GAMES101/PA7-1/PA7/Assignment7/cmake-build-debug/CMakeFiles/RayTracing.dir
+/Users/zhen/Devs/GAMES101/PA7-1/PA7/Assignment7/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/zhen/Devs/GAMES101/PA7-1/PA7/Assignment7/cmake-build-debug/CMakeFiles/rebuild_cache.dir
